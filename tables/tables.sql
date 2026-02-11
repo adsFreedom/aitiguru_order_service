@@ -21,10 +21,6 @@ CREATE TABLE products (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Indexes for category and name
-CREATE INDEX idx_products_category_id ON products(category_id);
-CREATE INDEX idx_products_name ON products(name);
-
 -- Clients
 CREATE TABLE clients (
     id SERIAL PRIMARY KEY,
@@ -33,9 +29,6 @@ CREATE TABLE clients (
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
-
--- Index by name
-CREATE INDEX idx_clients_name ON clients(name);
 
 -- Order
 CREATE TABLE orders (
@@ -50,8 +43,6 @@ CREATE TABLE orders (
 
 -- Indexes for client, order_date and oreder_status
 CREATE INDEX idx_orders_client_id ON orders(client_id);
-CREATE INDEX idx_orders_order_date ON orders(order_date);
-CREATE INDEX idx_orders_status ON orders(status);
 
 -- Order items
 CREATE TABLE order_items (
@@ -66,6 +57,5 @@ CREATE TABLE order_items (
 );
 
 -- Indexes order, product, create time
-CREATE INDEX idx_order_items_order_id ON order_items(order_id);
 CREATE INDEX idx_order_items_product_id ON order_items(product_id);
 CREATE INDEX idx_order_items_created_at ON order_items(created_at);
