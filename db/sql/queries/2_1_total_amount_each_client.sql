@@ -1,3 +1,4 @@
+-- Сумма товаров заказанных под каждого клиента (Наименование клиента, сумма)
 SELECT
     c.name AS client_name,
     COALESCE(SUM(oi.quantity * oi.price), 0) AS total_amount
