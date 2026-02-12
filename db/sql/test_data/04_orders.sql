@@ -1,20 +1,23 @@
 -- Очистка
 TRUNCATE TABLE orders RESTART IDENTITY CASCADE;
 
--- Заказы за разные периоды
-INSERT INTO orders (client_id, order_date, status, total_amount) VALUES
-    (1, CURRENT_TIMESTAMP, 'completed', 177200.00),                          -- сегодня
-    (2, CURRENT_TIMESTAMP - INTERVAL '1 day', 'completed', 1055.00),         -- вчера
-    (3, CURRENT_TIMESTAMP - INTERVAL '3 days', 'completed', 145850.00),      -- 3 дня назад
-    (4, CURRENT_TIMESTAMP - INTERVAL '7 days', 'completed', 231500.00),      -- неделя назад
-    (5, CURRENT_TIMESTAMP - INTERVAL '14 days', 'completed', 86500.00),      -- 2 недели назад
-    (6, CURRENT_TIMESTAMP - INTERVAL '1 month', 'completed', 535.00),        -- месяц назад
-    (7, CURRENT_TIMESTAMP - INTERVAL '1.5 months', 'completed', 142000.00),  -- 1.5 месяца назад
-    (8, CURRENT_TIMESTAMP - INTERVAL '2 months', 'completed', 70650.00),     -- 2 месяца назад
-    (9, CURRENT_TIMESTAMP - INTERVAL '3 months', 'completed', 38885.00),     -- 3 месяца назад
-    (10, CURRENT_TIMESTAMP, 'completed', 14215.00),                          -- сегодня
-    (1, CURRENT_TIMESTAMP - INTERVAL '14 days', 'completed', 123000.00),     -- Иван Петров (ещё один)
-    (2, CURRENT_TIMESTAMP, 'completed', 1045.00),                            -- Мария Сидорова (сегодня)
-    (3, CURRENT_TIMESTAMP - INTERVAL '1 day', 'completed', 300750.00),       -- Алексей Козлов (вчера)
-    (4, CURRENT_TIMESTAMP - INTERVAL '7 days', 'completed', 395.00),         -- Елена Васильева (продукты)
-    (5, CURRENT_TIMESTAMP, 'completed', 68500.00);                           -- Дмитрий Смирнов (техника)
+-- Заказы
+INSERT INTO orders (id, client_id, order_date, status) VALUES
+    (1, (SELECT id FROM clients WHERE name = 'Иван Петров'),        CURRENT_TIMESTAMP, 'completed'),
+    (2, (SELECT id FROM clients WHERE name = 'Мария Сидорова'),      CURRENT_TIMESTAMP - INTERVAL '1 day', 'completed'),
+    (3, (SELECT id FROM clients WHERE name = 'Алексей Козлов'),      CURRENT_TIMESTAMP - INTERVAL '3 days', 'completed'),
+    (4, (SELECT id FROM clients WHERE name = 'Елена Васильева'),     CURRENT_TIMESTAMP - INTERVAL '7 days', 'completed'),
+    (5, (SELECT id FROM clients WHERE name = 'Дмитрий Смирнов'),     CURRENT_TIMESTAMP - INTERVAL '14 days', 'completed'),
+    (6, (SELECT id FROM clients WHERE name = 'Ольга Новикова'),      CURRENT_TIMESTAMP - INTERVAL '1 month', 'completed'),
+    (7, (SELECT id FROM clients WHERE name = 'Сергей Морозов'),      CURRENT_TIMESTAMP - INTERVAL '1.5 month', 'completed'),
+    (8, (SELECT id FROM clients WHERE name = 'Анна Зайцева'),        CURRENT_TIMESTAMP - INTERVAL '2 month', 'completed'),
+    (9, (SELECT id FROM clients WHERE name = 'Павел Волков'),        CURRENT_TIMESTAMP - INTERVAL '3 month', 'completed'),
+    (10, (SELECT id FROM clients WHERE name = 'Татьяна Орлова'),     CURRENT_TIMESTAMP, 'completed'),
+    (11, (SELECT id FROM clients WHERE name = 'Иван Петров'),        CURRENT_TIMESTAMP - INTERVAL '14 days', 'completed'),
+    (12, (SELECT id FROM clients WHERE name = 'Мария Сидорова'),     CURRENT_TIMESTAMP, 'completed'),
+    (13, (SELECT id FROM clients WHERE name = 'Алексей Козлов'),     CURRENT_TIMESTAMP - INTERVAL '1 day', 'completed'),
+    (14, (SELECT id FROM clients WHERE name = 'Елена Васильева'),    CURRENT_TIMESTAMP - INTERVAL '7 days', 'completed'),
+    (15, (SELECT id FROM clients WHERE name = 'Дмитрий Смирнов'),    CURRENT_TIMESTAMP, 'completed');
+
+-- Синхронизация сиквенса
+SELECT setval('orders_id_seq', (SELECT MAX(id) FROM orders));

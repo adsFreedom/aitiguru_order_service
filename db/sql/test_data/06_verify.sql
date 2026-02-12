@@ -34,8 +34,7 @@ LIMIT 10;
 SELECT
     o.id AS order_id,
     c.name AS client,
-    o.order_date,
-    o.total_amount
+    o.order_date
 FROM orders o
 JOIN clients c ON o.client_id = c.id
 ORDER BY o.order_date DESC

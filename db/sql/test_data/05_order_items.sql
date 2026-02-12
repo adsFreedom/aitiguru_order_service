@@ -1,83 +1,99 @@
 -- Очистка
 TRUNCATE TABLE order_items RESTART IDENTITY CASCADE;
 
--- Позиции для каждого заказа
+-- Заказ 1: Иван Петров
 INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
-    -- Заказ 1: Иван Петров
-    (1, 1, 1, 120000.00),
-    (1, 13, 2, 28000.00),
-    (1, 40, 1, 1200.00),
+    (1, (SELECT id FROM products WHERE name = 'iPhone 15 Pro 256GB'), 1, (SELECT price FROM products WHERE name = 'iPhone 15 Pro 256GB')),
+    (1, (SELECT id FROM products WHERE name = 'AirPods Pro 2'), 2, (SELECT price FROM products WHERE name = 'AirPods Pro 2')),
+    (1, (SELECT id FROM products WHERE name = 'Война и мир (комплект)'), 1, (SELECT price FROM products WHERE name = 'Война и мир (комплект)'));
 
-    -- Заказ 2: Мария Сидорова
-    (2, 16, 2, 85.00),
-    (2, 22, 1, 650.00),
-    (2, 25, 3, 65.00),
-    (2, 28, 2, 35.00),
+-- Заказ 2: Мария Сидорова
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (2, (SELECT id FROM products WHERE name = 'Молоко Домик в деревне 3.2%'), 2, (SELECT price FROM products WHERE name = 'Молоко Домик в деревне 3.2%')),
+    (2, (SELECT id FROM products WHERE name = 'Сыр Российский 1кг'), 1, (SELECT price FROM products WHERE name = 'Сыр Российский 1кг')),
+    (2, (SELECT id FROM products WHERE name = 'Хлеб Бородинский 400г'), 3, (SELECT price FROM products WHERE name = 'Хлеб Бородинский 400г')),
+    (2, (SELECT id FROM products WHERE name = 'Булочка с изюмом'), 2, (SELECT price FROM products WHERE name = 'Булочка с изюмом'));
 
-    -- Заказ 3: Алексей Козлов
-    (3, 4, 1, 110000.00),
-    (3, 14, 1, 35000.00),
-    (3, 41, 1, 850.00),
+-- Заказ 3: Алексей Козлов
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (3, (SELECT id FROM products WHERE name = 'Samsung Galaxy S24 Ultra'), 1, (SELECT price FROM products WHERE name = 'Samsung Galaxy S24 Ultra')),
+    (3, (SELECT id FROM products WHERE name = 'Sony WH-1000XM5'), 1, (SELECT price FROM products WHERE name = 'Sony WH-1000XM5')),
+    (3, (SELECT id FROM products WHERE name = 'Преступление и наказание'), 1, (SELECT price FROM products WHERE name = 'Преступление и наказание'));
 
-    -- Заказ 4: Елена Васильева
-    (4, 7, 1, 75000.00),
-    (4, 10, 1, 150000.00),
-    (4, 15, 1, 5000.00),
-    (4, 42, 2, 750.00),
+-- Заказ 4: Елена Васильева
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (4, (SELECT id FROM products WHERE name = 'Xiaomi 14 Pro'), 1, (SELECT price FROM products WHERE name = 'Xiaomi 14 Pro')),
+    (4, (SELECT id FROM products WHERE name = 'MSI Gaming Laptop'), 1, (SELECT price FROM products WHERE name = 'MSI Gaming Laptop')),
+    (4, (SELECT id FROM products WHERE name = 'JBL Tune 510BT'), 1, (SELECT price FROM products WHERE name = 'JBL Tune 510BT')),
+    (4, (SELECT id FROM products WHERE name = 'Гарри Поттер и философский камень'), 2, (SELECT price FROM products WHERE name = 'Гарри Поттер и философский камень'));
 
-    -- Заказ 5: Дмитрий Смирнов
-    (5, 2, 1, 85000.00),
-    (5, 43, 1, 1500.00),
+-- Заказ 5: Дмитрий Смирнов
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (5, (SELECT id FROM products WHERE name = 'iPhone 14 128GB'), 1, (SELECT price FROM products WHERE name = 'iPhone 14 128GB')),
+    (5, (SELECT id FROM products WHERE name = 'Атлант расправил плечи'), 1, (SELECT price FROM products WHERE name = 'Атлант расправил плечи'));
 
-    -- Заказ 6: Ольга Новикова
-    (6, 17, 3, 75.00),
-    (6, 23, 2, 120.00),
-    (6, 28, 2, 35.00),
+-- Заказ 6: Ольга Новикова
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (6, (SELECT id FROM products WHERE name = 'Молоко Простоквашино 2.5%'), 3, (SELECT price FROM products WHERE name = 'Молоко Простоквашино 2.5%')),
+    (6, (SELECT id FROM products WHERE name = 'Йогурт Активия 4шт'), 2, (SELECT price FROM products WHERE name = 'Йогурт Активия 4шт')),
+    (6, (SELECT id FROM products WHERE name = 'Булочка с изюмом'), 2, (SELECT price FROM products WHERE name = 'Булочка с изюмом'));
 
-    -- Заказ 7: Сергей Морозов
-    (7, 5, 1, 35000.00),
-    (7, 6, 1, 95000.00),
-    (7, 37, 1, 12000.00),
+-- Заказ 7: Сергей Морозов
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (7, (SELECT id FROM products WHERE name = 'Samsung Galaxy A54'), 1, (SELECT price FROM products WHERE name = 'Samsung Galaxy A54')),
+    (7, (SELECT id FROM products WHERE name = 'Samsung Galaxy Z Flip5'), 1, (SELECT price FROM products WHERE name = 'Samsung Galaxy Z Flip5')),
+    (7, (SELECT id FROM products WHERE name = 'Кроссовки Nike Air Max'), 1, (SELECT price FROM products WHERE name = 'Кроссовки Nike Air Max'));
 
-    -- Заказ 8: Анна Зайцева
-    (8, 3, 1, 45000.00),
-    (8, 8, 1, 25000.00),
-    (8, 21, 1, 450.00),
+-- Заказ 8: Анна Зайцева
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (8, (SELECT id FROM products WHERE name = 'iPhone SE 2022'), 1, (SELECT price FROM products WHERE name = 'iPhone SE 2022')),
+    (8, (SELECT id FROM products WHERE name = 'Xiaomi Redmi Note 13'), 1, (SELECT price FROM products WHERE name = 'Xiaomi Redmi Note 13')),
+    (8, (SELECT id FROM products WHERE name = 'Сыр Пармезан 200г'), 1, (SELECT price FROM products WHERE name = 'Сыр Пармезан 200г'));
 
-    -- Заказ 9: Павел Волков
-    (9, 9, 1, 38000.00),
-    (9, 21, 1, 450.00),
-    (9, 24, 1, 95.00),
-    (9, 27, 4, 60.00),
+-- Заказ 9: Павел Волков
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (9, (SELECT id FROM products WHERE name = 'Xiaomi Poco F5'), 1, (SELECT price FROM products WHERE name = 'Xiaomi Poco F5')),
+    (9, (SELECT id FROM products WHERE name = 'Сыр Пармезан 200г'), 1, (SELECT price FROM products WHERE name = 'Сыр Пармезан 200г')),
+    (9, (SELECT id FROM products WHERE name = 'Йогурт Ряженка 1л'), 1, (SELECT price FROM products WHERE name = 'Йогурт Ряженка 1л')),
+    (9, (SELECT id FROM products WHERE name = 'Хлеб Ржаной'), 4, (SELECT price FROM products WHERE name = 'Хлеб Ржаной'));
 
-    -- Заказ 10: Татьяна Орлова
-    (10, 16, 1, 85.00),
-    (10, 25, 2, 65.00),
-    (10, 38, 1, 14000.00),
+-- Заказ 10: Татьяна Орлова
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (10, (SELECT id FROM products WHERE name = 'Молоко Домик в деревне 3.2%'), 1, (SELECT price FROM products WHERE name = 'Молоко Домик в деревне 3.2%')),
+    (10, (SELECT id FROM products WHERE name = 'Хлеб Бородинский 400г'), 2, (SELECT price FROM products WHERE name = 'Хлеб Бородинский 400г')),
+    (10, (SELECT id FROM products WHERE name = 'Кроссовки Adidas Ultraboost'), 1, (SELECT price FROM products WHERE name = 'Кроссовки Adidas Ultraboost'));
 
-    -- Заказ 11: Иван Петров (повторный)
-    (11, 6, 1, 95000.00),
-    (11, 13, 1, 28000.00),
+-- Заказ 11: Иван Петров (повторный)
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (11, (SELECT id FROM products WHERE name = 'Samsung Galaxy Z Flip5'), 1, (SELECT price FROM products WHERE name = 'Samsung Galaxy Z Flip5')),
+    (11, (SELECT id FROM products WHERE name = 'AirPods Pro 2'), 1, (SELECT price FROM products WHERE name = 'AirPods Pro 2'));
 
-    -- Заказ 12: Мария Сидорова (сегодня)
-    (12, 16, 1, 85.00),
-    (12, 17, 1, 75.00),
-    (12, 18, 1, 95.00),
-    (12, 22, 1, 650.00),
-    (12, 25, 2, 65.00),
-    (12, 28, 3, 35.00),
+-- Заказ 12: Мария Сидорова (повторный)
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (12, (SELECT id FROM products WHERE name = 'Молоко Домик в деревне 3.2%'), 1, (SELECT price FROM products WHERE name = 'Молоко Домик в деревне 3.2%')),
+    (12, (SELECT id FROM products WHERE name = 'Молоко Простоквашино 2.5%'), 1, (SELECT price FROM products WHERE name = 'Молоко Простоквашино 2.5%')),
+    (12, (SELECT id FROM products WHERE name = 'Молоко Parmalat 3.5%'), 1, (SELECT price FROM products WHERE name = 'Молоко Parmalat 3.5%')),
+    (12, (SELECT id FROM products WHERE name = 'Сыр Российский 1кг'), 1, (SELECT price FROM products WHERE name = 'Сыр Российский 1кг')),
+    (12, (SELECT id FROM products WHERE name = 'Хлеб Бородинский 400г'), 2, (SELECT price FROM products WHERE name = 'Хлеб Бородинский 400г')),
+    (12, (SELECT id FROM products WHERE name = 'Булочка с изюмом'), 3, (SELECT price FROM products WHERE name = 'Булочка с изюмом'));
 
-    -- Заказ 13: Алексей Козлов (вчера)
-    (13, 1, 1, 120000.00),
-    (13, 11, 1, 180000.00),
-    (13, 42, 1, 750.00),
+-- Заказ 13: Алексей Козлов (повторный)
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (13, (SELECT id FROM products WHERE name = 'iPhone 15 Pro 256GB'), 1, (SELECT price FROM products WHERE name = 'iPhone 15 Pro 256GB')),
+    (13, (SELECT id FROM products WHERE name = 'ASUS ROG Strix'), 1, (SELECT price FROM products WHERE name = 'ASUS ROG Strix')),
+    (13, (SELECT id FROM products WHERE name = 'Гарри Поттер и философский камень'), 1, (SELECT price FROM products WHERE name = 'Гарри Поттер и философский камень'));
 
-    -- Заказ 14: Елена Васильева (продукты)
-    (14, 16, 2, 85.00),
-    (14, 23, 1, 120.00),
-    (14, 25, 1, 65.00),
-    (14, 30, 2, 40.00),
+-- Заказ 14: Елена Васильева (продукты)
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (14, (SELECT id FROM products WHERE name = 'Молоко Домик в деревне 3.2%'), 2, (SELECT price FROM products WHERE name = 'Молоко Домик в деревне 3.2%')),
+    (14, (SELECT id FROM products WHERE name = 'Йогурт Активия 4шт'), 1, (SELECT price FROM products WHERE name = 'Йогурт Активия 4шт')),
+    (14, (SELECT id FROM products WHERE name = 'Хлеб Бородинский 400г'), 1, (SELECT price FROM products WHERE name = 'Хлеб Бородинский 400г')),
+    (14, (SELECT id FROM products WHERE name = 'Булочка с корицей'), 2, (SELECT price FROM products WHERE name = 'Булочка с корицей'));
 
-    -- Заказ 15: Дмитрий Смирнов (техника)
-    (15, 42, 1, 65000.00),
-    (15, 43, 1, 3500.00);
+-- Заказ 15: Дмитрий Смирнов
+INSERT INTO order_items (order_id, product_id, quantity, price) VALUES
+    (15, (SELECT id FROM products WHERE name = 'Холодильник LG'), 1, (SELECT price FROM products WHERE name = 'Холодильник LG')),
+    (15, (SELECT id FROM products WHERE name = 'Чайник Philips'), 1, (SELECT price FROM products WHERE name = 'Чайник Philips'));
+
+-- Синхронизация сиквенса
+SELECT setval('order_items_id_seq', (SELECT MAX(id) FROM order_items));
