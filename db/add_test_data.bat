@@ -1,4 +1,4 @@
-echo [START] Заполнение базы данных...
+echo [START] Fill database...
 
 docker cp db/sql/test_data/clear.sql order_postgres:/tmp/clear.sql
 docker exec -i order_postgres psql -U postgres -d order_db -f /tmp/clear.sql
@@ -28,4 +28,4 @@ docker cp db/sql/test_data/06_verify.sql order_postgres:/tmp/06_verify.sql
 docker exec -i order_postgres psql -U postgres -d order_db -f /tmp/06_verify.sql
 echo [OK] 06_verify.sql
 
-echo [FINISH] Данные загружены успешно.
+echo [FINISH] Data loaded.
