@@ -10,7 +10,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_nested_delimiter="_",
         env_nested_max_split=1,
-        env_file=Path(__file__).parents[2] / ".env"
+        env_file=Path(__file__).parents[2] / ".env",
+        extra='ignore'
     )
 
     db: DBSettings = DBSettings()
