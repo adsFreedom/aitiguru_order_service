@@ -1,4 +1,4 @@
---  View для топ-5 самых покупаемых товаров за посследний месяц
+--  View for top 5 buy products for last month
 CREATE OR REPLACE VIEW top_5_products_last_month AS
 SELECT
     p.name AS product_name,
