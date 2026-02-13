@@ -7,7 +7,6 @@ from pydantic import BaseModel, Field, field_validator
 
 class AddToOrderRequest(BaseModel):
     """Add product to order"""
-    order_id: int = Field(..., description="Order ID", gt=0)
     product_id: int = Field(..., description="Product ID", gt=0)
     quantity: int = Field(..., gt=0, description="Product quantity")
 

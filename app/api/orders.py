@@ -81,15 +81,9 @@ async def add_item_to_order(
         db: AsyncSession = Depends(get_db)
 ):
     """Add product item to order."""
-    if order_id != request.order_id:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="order_id in URL and request not equal"
-        )
-
     return await add_product_to_order(
         db=db,
-        order_id=request.order_id,
+        order_id=order_id,
         product_id=request.product_id,
         quantity=request.quantity
     )
