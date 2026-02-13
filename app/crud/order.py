@@ -1,5 +1,4 @@
 from decimal import Decimal
-from uuid import UUID
 
 from fastapi import HTTPException, status
 from sqlalchemy import select, func
@@ -11,8 +10,8 @@ from app.models import Order, Product, OrderItem
 
 async def add_product_to_order(
         db: AsyncSession,
-        order_id: UUID,
-        product_id: UUID,
+        order_id: int,
+        product_id: int,
         quantity: int
 ) -> OrderItem:
     """Add product to order."""

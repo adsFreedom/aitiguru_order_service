@@ -1,14 +1,13 @@
 from datetime import datetime
 from decimal import Decimal
-from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
 
 
 class AddToOrderRequest(BaseModel):
     """Add product to order"""
-    order_id: UUID = Field(..., description="Order ID")
-    product_id: UUID = Field(..., description="Product ID")
+    order_id: int = Field(..., description="Order ID", gt=0)
+    product_id: int = Field(..., description="Product ID", gt=0)
     quantity: int = Field(..., gt=0, description="Product quantity")
 
     @field_validator('quantity')
@@ -21,9 +20,9 @@ class AddToOrderRequest(BaseModel):
 
 class OrderItemResponse(BaseModel):
     """Response with order product info"""
-    id: UUID
-    order_id: UUID
-    product_id: UUID
+    id: int
+    order_id: int
+    product_id: int
     quantity: int
     price: Decimal
     created_at: datetime
@@ -38,3 +37,15 @@ class InsufficientStockError(BaseModel):
     detail: str
     available: int
     requested: int
+
+
+class NotFoundError(BaseModel):
+    """Error response for not found entities"""
+    detail: str
+    entity: str
+    entity_id: int
+
+
+class ConflictError(BaseModel):
+    """Error response for data conflicts"""
+    detail: str
