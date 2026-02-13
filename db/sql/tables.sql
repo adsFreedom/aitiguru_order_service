@@ -58,3 +58,6 @@ CREATE TABLE order_items (
 -- Indexes order, product, create time
 CREATE INDEX idx_order_items_product_id ON order_items(product_id);
 CREATE INDEX idx_order_items_created_at ON order_items(created_at);
+
+-- Index by order date
+CREATE INDEX CONCURRENTLY idx_orders_order_date ON orders(order_date DESC);
