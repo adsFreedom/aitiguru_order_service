@@ -2,16 +2,17 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:15-alpine
+    build:
+      context: .
+      dockerfile: /docker/postgres/Dockerfile
     container_name: order_postgres
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DB}
+      INIT_DB: ${INIT_DB}
     ports:
       - "${DB_PORT}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
       interval: 5s
@@ -19,28 +20,28 @@ services:
       retries: 10
     networks:
       - app_network
-
-  order-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: order_service
-    ports:
-      - "8000:8000"
-    environment:
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DB=${DB_DB}
-    depends_on:
-      postgres:
-        condition: service_healthy
-    networks:
-      - app_network
-    volumes:
-      - .:/app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+#
+#  order-service:
+#    build:
+#      context: .
+#      dockerfile: /docker/app/Dockerfile
+#    container_name: order_service
+#    ports:
+#      - "8000:8000"
+#    environment:
+#      - DB_HOST=postgres
+#      - DB_PORT=5432
+#      - DB_USER=${DB_USER}
+#      - DB_PASSWORD=${DB_PASSWORD}
+#      - DB_DB=${DB_DB}
+#    depends_on:
+#      postgres:
+#        condition: service_healthy
+#    networks:
+#      - app_network
+#    volumes:
+#      - .:/app
+#    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 volumes:
   postgres_data:
