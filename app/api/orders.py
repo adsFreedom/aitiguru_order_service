@@ -1,12 +1,59 @@
+from decimal import Decimal
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.crud import add_product_to_order
+from app.crud import add_product_to_order, get_order_with_items
 from app.database import get_db
-from app.schemas import (AddToOrderRequest, OrderItemResponse,
+from app.schemas import (AddToOrderRequest, OrderItemResponse, OrderResponse,
                          InsufficientStockError, NotFoundError, ConflictError)
 
 router = APIRouter(prefix="/orders", tags=["orders"])
+
+
+@router.get(
+    "/{order_id}",
+    response_model=OrderResponse,
+    responses={
+        404: {
+            "model": NotFoundError,
+            "description": "Order not found"
+        }
+    },
+    summary="Get order details with items",
+    description="Get complete order information including all items."
+)
+async def get_order(
+        order_id: int,
+        db: AsyncSession = Depends(get_db)
+):
+    """Get order by ID with all items."""
+    order = await get_order_with_items(db, order_id)
+
+    items_with_subtotal = []
+    for item in order.items:
+        subtotal = Decimal(item.quantity) * Decimal(item.price)
+        items_with_subtotal.append({
+            "id": item.id,
+            "product": {
+                "id": item.product.id,
+                "name": item.product.name,
+                "price": item.product.price
+            },
+            "quantity": item.quantity,
+            "price": item.price,
+            "subtotal": subtotal
+        })
+
+    return {
+        "id": order.id,
+        "client_id": order.client_id,
+        "order_date": order.order_date,
+        "status": order.status,
+        "items": items_with_subtotal,
+        "created_at": order.created_at,
+        "updated_at": order.updated_at
+    }
 
 
 @router.post(

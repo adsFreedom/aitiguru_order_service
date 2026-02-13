@@ -4,6 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import joinedload
 
 from app.models import Order, Product, OrderItem
 
@@ -95,3 +96,31 @@ async def add_product_to_order(
             status_code=status.HTTP_409_CONFLICT,
             detail="DB conflict"
         )
+
+
+async def get_order_with_items(db: AsyncSession, order_id: int) -> Order:
+    """
+    Get order with all items and product details
+    """
+    stmt = (
+        select(Order)
+        .where(Order.id == order_id)
+        .options(
+            joinedload(Order.items).joinedload(OrderItem.product)
+        )
+    )
+
+    result = await db.execute(stmt)
+    order = result.unique().scalar_one_or_none()
+
+    if not order:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={
+                "detail": f"Order with ID {order_id} not found",
+                "entity": "order",
+                "entity_id": order_id
+            }
+        )
+
+    return order
