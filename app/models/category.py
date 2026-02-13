@@ -1,9 +1,7 @@
 from datetime import datetime, timezone
 from typing import Optional, List
-from uuid import uuid4
 
-from sqlalchemy import String, ForeignKey, DateTime
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -13,14 +11,14 @@ class Category(Base):
     """Model for category products with hierarchy"""
     __tablename__ = "categories"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    id: Mapped[int] = mapped_column(
+        Integer,
         primary_key=True,
-        default=uuid4
+        autoincrement=True
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
-    parent_id: Mapped[Optional[UUID]] = mapped_column(
-        UUID(as_uuid=True),
+    parent_id: Mapped[Optional[int]] = mapped_column(
+        Integer,
         ForeignKey('categories.id', ondelete='CASCADE'),
         nullable=True,
         index=True

@@ -1,9 +1,8 @@
 from datetime import datetime, timezone
 from decimal import Decimal
-from uuid import uuid4
 
-from sqlalchemy import Integer, Numeric, ForeignKey, DateTime, CheckConstraint
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import (Integer, Numeric, ForeignKey, DateTime,
+                        CheckConstraint, UniqueConstraint)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -13,19 +12,19 @@ class OrderItem(Base):
     """Order item model"""
     __tablename__ = "order_items"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    id: Mapped[int] = mapped_column(
+        Integer,
         primary_key=True,
-        default=uuid4
+        autoincrement=True
     )
-    order_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    order_id: Mapped[int] = mapped_column(
+        Integer,
         ForeignKey('orders.id', ondelete='CASCADE'),
         nullable=False,
         index=True
     )
-    product_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    product_id: Mapped[int] = mapped_column(
+        Integer,
         ForeignKey('products.id', ondelete='CASCADE'),
         nullable=False,
         index=True
@@ -43,6 +42,7 @@ class OrderItem(Base):
     )
 
     __table_args__ = (
+        UniqueConstraint('order_id', 'product_id', name='uq_order_product'),
         CheckConstraint('quantity > 0', name='check_quantity_positive'),
         CheckConstraint('price > 0', name='check_price_positive'),
     )

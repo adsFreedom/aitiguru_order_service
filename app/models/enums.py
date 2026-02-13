@@ -3,12 +3,12 @@ from enum import Enum
 
 class OrderStatus(str, Enum):
     """Order status"""
-    CREATED = "CREATED"
-    CONFIRMED = "CONFIRMED"
-    PAID = "PAID"
-    SHIPPED = "SHIPPED"
-    COMPLETED = "COMPLETED"
-    CANCELED = "CANCELED"
+    created = "created"
+    confirmed = "confirmed"
+    paid = "paid"
+    shipped = "shipped"
+    completed = "completed"
+    canceled = "canceled"
 
 
 class CategoryType(str, Enum):

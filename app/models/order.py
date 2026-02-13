@@ -1,10 +1,8 @@
 from datetime import datetime, timezone
 from decimal import Decimal
 from typing import List
-from uuid import uuid4
 
-from sqlalchemy import String, Numeric, ForeignKey, DateTime
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, Numeric, ForeignKey, DateTime, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -15,13 +13,13 @@ class Order(Base):
     """Order model"""
     __tablename__ = "orders"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    id: Mapped[int] = mapped_column(
+        Integer,
         primary_key=True,
-        default=uuid4
+        autoincrement=True
     )
-    client_id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    client_id: Mapped[int] = mapped_column(
+        Integer,
         ForeignKey('clients.id', ondelete='CASCADE'),
         nullable=False,
         index=True
@@ -31,9 +29,9 @@ class Order(Base):
         default=lambda: datetime.now(timezone.utc),
         index=True
     )
-    status: Mapped[OrderStatus] = mapped_column(
+    status: Mapped[str] = mapped_column(
         String(50),
-        default=OrderStatus.CREATED.value,
+        default=OrderStatus.created.value,
         index=True
     )
     total_amount: Mapped[Decimal] = mapped_column(

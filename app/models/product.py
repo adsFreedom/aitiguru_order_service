@@ -1,11 +1,9 @@
 from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Optional, List
-from uuid import uuid4
 
 from sqlalchemy import (String, Integer, Numeric, ForeignKey, DateTime,
                         CheckConstraint)
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -15,10 +13,10 @@ class Product(Base):
     """Model for products"""
     __tablename__ = "products"
 
-    id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True),
+    id: Mapped[int] = mapped_column(
+        Integer,
         primary_key=True,
-        default=uuid4
+        autoincrement=True
     )
     name: Mapped[str] = mapped_column(String(255), nullable=False, index=True)
     quantity: Mapped[int] = mapped_column(
@@ -30,8 +28,8 @@ class Product(Base):
         Numeric(10, 2),
         nullable=False
     )
-    category_id: Mapped[Optional[UUID]] = mapped_column(
-        UUID(as_uuid=True),
+    category_id: Mapped[Optional[int]] = mapped_column(
+        Integer,
         ForeignKey('categories.id', ondelete='SET NULL'),
         nullable=True,
         index=True
