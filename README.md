@@ -17,6 +17,6 @@ Test project for vacancy Backend developer for `AiTiGuru`.
 - May add partitions by date
 - To [tables.sql](db/sql/tables.sql) added index for order date
 
-After add index and big data get new explain without Seq:
+After add index and [big data](db/sql/queries/big_test_data.sql) get new explain without Seq:
 - [explain no index](db/sql/queries/explains/2_3_1_no_index)
 - [explain with index](db/sql/queries/explains/2_3_1_with_index)
