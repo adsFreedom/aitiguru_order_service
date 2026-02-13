@@ -34,10 +34,6 @@ class Order(Base):
         default=OrderStatus.created.value,
         index=True
     )
-    total_amount: Mapped[Decimal] = mapped_column(
-        Numeric(12, 2),
-        default=Decimal('0')
-    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         default=lambda: datetime.now(timezone.utc)
