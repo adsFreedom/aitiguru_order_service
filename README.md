@@ -4,7 +4,7 @@ Test project for vacancy Backend developer for `AiTiGuru`.
 
 [Technical specification text](https://docs.google.com/document/d/1IXCY12SSbktV2XM_X9tuIdnfpj1ZEnN05wCOhef5wpk/edit?tab=t.0)
 
-## Results
+## **Results**
 
 ### Queries
 
@@ -20,3 +20,27 @@ Test project for vacancy Backend developer for `AiTiGuru`.
 After add index and [big data](db/sql/queries/big_test_data.sql) get new explain without Seq:
 - [explain no index](db/sql/queries/explains/2_3_1_no_index)
 - [explain with index](db/sql/queries/explains/2_3_1_with_index)
+
+## Quick Start
+
+1. **Clone the repository**
+```commandline
+git clone https://github.com/adsFreedom/aitiguru_order_service.git
+cd order_service
+```
+
+2. **Create environment file**
+```commandline
+cp .env_example .env
+```
+Edit .env if you need to customize settings (default values work out of the box).
+
+3. **Build and start services**
+```commandline
+docker-compose build
+docker-compose up -d
+```
+
+4. **Use FastAPI endpoint**
+
+Use [localhost:8000/docs](http://localhost:8000/docs) for run swagger.
