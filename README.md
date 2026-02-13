@@ -23,7 +23,7 @@ After add index and [big data](db/sql/queries/big_test_data.sql) get new explain
 
 ## Quick Start
 
-1. **Clone the repository**
+1. **Clone repository**
 ```commandline
 git clone https://github.com/adsFreedom/aitiguru_order_service.git
 cd order_service
@@ -40,7 +40,21 @@ Edit .env if you need to customize settings (default values work out of the box)
 docker-compose build
 docker-compose up -d
 ```
+After start create postgres DB, fill test data(if `INIT_DB=true`) and run FastAPI.
 
 4. **Use FastAPI endpoint**
 
 Use [localhost:8000/docs](http://localhost:8000/docs) for run swagger.
+
+## Directories
+
+### [app](app)
+Directory with FastAPI service
+
+### [db](db)
+Database files:
+- SQL queries
+- *.bat files for run sql
+
+### [docker](docker)
+Dockerfiles for FastAPI service and custom postgres(for auto make and fill tables) 
