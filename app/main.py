@@ -1,11 +1,14 @@
 from fastapi import FastAPI
-from app.config import settings
+
+from app.api import orders_router
 
 app = FastAPI(
     title="Order Service",
     description="Service for managing orders",
     version="0.1.0"
 )
+
+app.include_router(orders_router)
 
 
 @app.get("/")
